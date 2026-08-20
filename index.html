@@ -6,23 +6,21 @@
     <title>Video</title>
     
     <style>
-        /* CONFIGURACIÓN DE TU FUENTE EN CATBOX */
+        /* FUENTE CON EL NOMBRE EXACTO EN GITHUB */
         @font-face {
             font-family: 'DeterminationSans';
-            src: url('https://files.catbox.moe/z5qzvs.ttf') format('truetype');
+            src: url('DeterminationSansWebRegular-369X.ttf') format('truetype');
         }
 
         body {
             background-color: #000000;
             margin: 0;
-            /* Quitamos overflow:hidden y agregamos 300vh para poder bajar MUCHO más en la página */
             min-height: 300vh; 
             cursor: pointer; 
             font-family: 'DeterminationSans', monospace;
             color: white; 
         }
 
-        /* Contenedor para mantener todo centrado en la primera pantalla visible */
         .pantalla-principal {
             display: flex;
             justify-content: center;
@@ -62,49 +60,45 @@
         .cuadro {
             /* === VARIABLES DEL CUADRO === */
             --movercuadroX: 0px;
-            --movercuadroY: 100px; /* Posición inicial antes de subir */
+            --movercuadroY: 100px; 
             
-            --anchocuadro: 300px; /* Estirar izquierda/derecha */
-            --altocuadro: 150px;  /* Estirar arriba/abajo */
-            --escalacuadro: 1;    /* Agrandar tamaño completo (ej: 1.5 o 2) */
+            --anchocuadro: 300px; 
+            --altocuadro: 150px;  
+            --escalacuadro: 1;    
 
             position: absolute;
-            z-index: 5; /* Atrás de la imagen, encima del fondo */
+            z-index: 5; 
             border: 4px solid white;
             background-color: black;
             
-            /* Aplicación de tamaño */
             width: var(--anchocuadro);
             height: var(--altocuadro);
             
-            /* Aplicación de movimiento y escala */
             transform: translate(var(--movercuadroX), var(--movercuadroY)) scale(var(--escalacuadro));
             transition: transform 1s ease-in-out;
             
-            /* Inicia oculto */
             display: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- Agrupamos todo aquí para que se centre en la parte de arriba de la página -->
     <div class="pantalla-principal">
         
         <!-- El Video -->
         <video id="miVideo">
-            <source src="https://files.catbox.moe/qqt4a9.mp4" type="video/mp4">
+            <source src="Deltarune.mp4" type="video/mp4">
         </video>
 
-        <!-- El Cuadro Nuevo -->
+        <!-- El Cuadro -->
         <div id="miCuadro" class="cuadro"></div>
 
         <!-- La Imagen -->
-        <img id="miImagen" src="https://files.catbox.moe/f0awab.png" alt="Superposición">
+        <img id="miImagen" src="Restaurant.png" alt="Superposición">
 
         <!-- El Sonido -->
         <audio id="miSonido">
-            <source src="https://files.catbox.moe/yg4k3d.wav" type="audio/wav">
+            <source src="sonido.wav" type="audio/wav">
         </audio>
 
     </div>
@@ -125,23 +119,18 @@
         // 2. Evento al terminar el video
         video.addEventListener('ended', function() {
             
-            // Aparece la imagen y reproduce el sonido inmediatamente
             imagen.style.display = 'block'; 
             sonido.play();
 
             // Contador de 3 segundos
             setTimeout(function() {
-                // Mueven el video y la imagen
                 video.style.setProperty('--movervideoY', '-149px');
                 imagen.style.setProperty('--moverimagenY', '-50px');
                 
-                // Hace aparecer el cuadro
                 cuadro.style.display = 'block';
                 
-                // Le damos 10 milisegundos de margen para que el navegador 
-                // registre que el cuadro apareció antes de animarlo hacia arriba.
                 setTimeout(function() {
-                    cuadro.style.setProperty('--movercuadroY', '-50px'); // Sube a -50px
+                    cuadro.style.setProperty('--movercuadroY', '-50px');
                 }, 10);
                 
             }, 3000); 
