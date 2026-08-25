@@ -78,6 +78,28 @@
             transition: transform 1s ease-in-out;
             
             display: none;
+
+            /* Estilos específicos para el contenido de texto del cuadro */
+            padding: 20px; /* Espacio interno para que el texto no toque el borde */
+            box-sizing: border-box; /* Asegura que el padding no afecte el ancho/alto total */
+            text-align: center; /* Título centrado, descripción centrada */
+        }
+
+        .titulo-cuadro {
+            color: #ffff00; /* Amarillo Undertale */
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px; /* Espacio debajo del título */
+        }
+
+        .descripcion-cuadro {
+            color: #ffffff; /* Blanco */
+            font-size: 16px;
+            line-height: 1.4; /* Espacio entre líneas para legibilidad */
+        }
+
+        .descripcion-cuadro b {
+            color: #ffffff; /* Asegurar que los ingredientes sean blancos */
         }
     </style>
 </head>
@@ -91,7 +113,16 @@
         </video>
 
         <!-- El Cuadro -->
-        <div id="miCuadro" class="cuadro"></div>
+        <div id="miCuadro" class="cuadro">
+            <div class="titulo-cuadro">Top Cake</div>
+            <div class="descripcion-cuadro">
+                A shimmering cake from an ancient recipe.
+                <br>
+                <b>Ingredients:</b> Golden Flower Petals, rare Starfruits, Underground Honey, Battle Essence.
+                <br>
+                It feels warm to the touch.
+            </div>
+        </div>
 
         <!-- La Imagen -->
         <img id="miImagen" src="Restaurant.png" alt="Superposición">
