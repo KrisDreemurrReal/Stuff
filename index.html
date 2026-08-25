@@ -74,10 +74,10 @@
             width: var(--anchocuadro);
             height: var(--altocuadro);
             
-            /* Animación suave tanto de movimiento como de aparición (opacidad) */
+            /* Animación de posición y efecto de desvanecido entrante (Fade-In) */
             transform: translate(var(--movercuadroX), var(--movercuadroY)) scale(var(--escalacuadro));
-            opacity: 0; 
-            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+            opacity: 0; /* Inicia totalmente transparente */
+            transition: transform 1s ease-in-out, opacity 1.2s ease-in-out;
             
             display: none;
 
@@ -113,7 +113,7 @@
             <source src="Deltarune.mp4" type="video/mp4">
         </video>
 
-        <!-- El Cuadro (con el título y texto dentro) -->
+        <!-- El Cuadro -->
         <div id="miCuadro" class="cuadro">
             <div class="titulo-cuadro">Top Cake</div>
             <div class="descripcion-cuadro">
@@ -158,13 +158,15 @@
                 video.style.setProperty('--movervideoY', '-149px');
                 imagen.style.setProperty('--moverimagenY', '-50px');
                 
+                // Muestra el cuadro en el HTML
                 cuadro.style.display = 'block';
                 
-                // Activa el movimiento hacia arriba y la visibilidad suave
-                setTimeout(function() {
-                    cuadro.style.setProperty('--movercuadroY', '430px');
-                    cuadro.style.opacity = '1';
-                }, 20);
+                // Forzar reflow para asegurar que el navegador aplique la transición desde opacity 0
+                void cuadro.offsetWidth; 
+                
+                // Activa la subida y el fade-in (aparición gradual)
+                cuadro.style.setProperty('--movercuadroY', '430px');
+                cuadro.style.opacity = '1';
                 
             }, 3000); 
 
