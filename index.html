@@ -105,6 +105,9 @@
 
         /* === ESTILOS DEL BOTÓN === */
         .boton-fotos {
+            /* === VARIABLE PARA MOVER EL BOTÓN EN Y === */
+            --moverbotonY: 0px; /* Cambiá este valor (ej: 15px o -10px) para moverlo */
+
             display: inline-block;
             margin-top: 10px;
             padding: 8px 16px;
@@ -112,10 +115,13 @@
             color: white;
             border: 4px solid white;
             font-family: 'DeterminationSans', monospace;
-            font-size: 25px; /* Mismo tamaño que la descripción */
-            text-decoration: none; /* Quita el subrayado del enlace */
+            font-size: 25px;
+            text-decoration: none;
             cursor: pointer;
-            transition: background-color 0.2s, color 0.2s; /* Animación rápida al pasar el mouse */
+            
+            /* Aplica el desplazamiento vertical */
+            transform: translateY(var(--moverbotonY));
+            transition: background-color 0.2s, color 0.2s, transform 0.2s;
         }
 
         .boton-fotos:hover {
