@@ -59,27 +59,28 @@
 
         .cuadro {
             /* === VARIABLES DEL CUADRO === */
-            --movercuadroX: -260px; /* Nueva posición X */
-            --movercuadroY: 580px;  /* Posición de inicio más abajo para que suba */
+            --movercuadroX: -260px; 
+            --movercuadroY: 580px; /* Posición inicial abajo */
             
-            --anchocuadro: 455px;   /* Nuevo Ancho */
-            --altocuadro: 355px;    /* Nuevo Alto */
+            --anchocuadro: 455px;   
+            --altocuadro: 355px;    
             --escalacuadro: 1;    
 
             position: absolute;
             z-index: 5; 
-            border: 6px solid white; /* Borde ajustado a 6px */
+            border: 6px solid white; 
             background-color: black;
             
             width: var(--anchocuadro);
             height: var(--altocuadro);
             
+            /* Animación suave tanto de movimiento como de aparición (opacidad) */
             transform: translate(var(--movercuadroX), var(--movercuadroY)) scale(var(--escalacuadro));
-            transition: transform 1s ease-in-out;
+            opacity: 0; 
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
             
             display: none;
 
-            /* Estilos específicos para el contenido de texto del cuadro */
             padding: 20px; 
             box-sizing: border-box; 
             text-align: center; 
@@ -87,14 +88,14 @@
 
         .titulo-cuadro {
             color: #ffff00; 
-            font-size: 48px; /* Nuevo tamaño del título */
+            font-size: 48px; 
             font-weight: bold;
             margin-bottom: 10px; 
         }
 
         .descripcion-cuadro {
             color: #ffffff; 
-            font-size: 25px; /* Nuevo tamaño de la descripción */
+            font-size: 25px; 
             line-height: 1.4; 
         }
 
@@ -112,15 +113,14 @@
             <source src="Deltarune.mp4" type="video/mp4">
         </video>
 
-        <!-- El Cuadro -->
+        <!-- El Cuadro (con el título y texto dentro) -->
         <div id="miCuadro" class="cuadro">
             <div class="titulo-cuadro">Top Cake</div>
             <div class="descripcion-cuadro">
                 El resultado de varios dias de esfuerzo, una torta de alta calidad.
-                <br><br> <!-- Espacio antes de los ingredientes -->
+                <br><br>
                 <b>Ingredientes:</b> Harina de trigo, azúcar, huevos, manteca, esencia de vainilla y polvo para hornear.
-                <br><br> <!-- Espacio vacío que pediste para rellenar después -->
-                
+                <br><br>
             </div>
         </div>
 
@@ -160,10 +160,11 @@
                 
                 cuadro.style.display = 'block';
                 
+                // Activa el movimiento hacia arriba y la visibilidad suave
                 setTimeout(function() {
-                    // Sube hasta la posición Y que me pediste (430px)
                     cuadro.style.setProperty('--movercuadroY', '430px');
-                }, 10);
+                    cuadro.style.opacity = '1';
+                }, 20);
                 
             }, 3000); 
 
