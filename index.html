@@ -103,10 +103,31 @@
             color: #ffffff; 
         }
 
+        /* === ESTILOS DEL PRECIO === */
+        .precio-cuadro {
+            /* === VARIABLES PARA MOVER EL PRECIO === */
+            --moverprecioX: 270px;  /* Mueve hacia los lados */
+            --moverprecioY: 270px;  /* Mueve hacia arriba y abajo */
+            --rotacionprecio: -30deg; /* -30deg lo inclina a la izquierda */
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #00ff00; /* Verde brillante */
+            font-size: 35px;
+            font-weight: bold;
+            text-shadow: 2px 2px 0px #000; /* Sombra negra para que resalte */
+            
+            /* Aplica la posición y la rotación */
+            transform: translate(var(--moverprecioX), var(--moverprecioY)) rotate(var(--rotacionprecio));
+            z-index: 10; 
+            pointer-events: none; /* Para que no estorbe si hacés clic cerca */
+        }
+
         /* === ESTILOS DEL BOTÓN === */
         .boton-fotos {
             /* === VARIABLE PARA MOVER EL BOTÓN EN Y === */
-            --moverbotonY: 0px; /* Cambiá este valor (ej: 15px o -10px) para moverlo */
+            --moverbotonY: 0px; 
 
             display: inline-block;
             margin-top: 10px;
@@ -119,7 +140,6 @@
             text-decoration: none;
             cursor: pointer;
             
-            /* Aplica el desplazamiento vertical */
             transform: translateY(var(--moverbotonY));
             transition: background-color 0.2s, color 0.2s, transform 0.2s;
         }
@@ -141,13 +161,17 @@
 
         <!-- El Cuadro -->
         <div id="miCuadro" class="cuadro">
+            
+            <!-- Etiqueta del Precio -->
+            <div class="precio-cuadro">$50000 ARS</div>
+
             <div class="titulo-cuadro">Top Cake</div>
             <div class="descripcion-cuadro">
                 El resultado de varios dias de esfuerzo, una torta de alta calidad.
                 <br><br>
                 <b>Ingredientes:</b> Harina de trigo, azúcar, huevos, manteca, esencia de vainilla y polvo para hornear.
                 <br><br>
-                <!-- El Botón que abre la imagen en otra pestaña -->
+                <!-- El Botón que abre la imagen -->
                 <a href="cake.png" target="_blank" class="boton-fotos">Ver fotos del producto</a>
             </div>
         </div>
@@ -189,10 +213,10 @@
                 // Muestra el cuadro en el HTML
                 cuadro.style.display = 'block';
                 
-                // Forzar reflow para asegurar que el navegador aplique la transición desde opacity 0
+                // Forzar reflow
                 void cuadro.offsetWidth; 
                 
-                // Activa la subida y el fade-in (aparición gradual)
+                // Activa la subida y el fade-in
                 cuadro.style.setProperty('--movercuadroY', '430px');
                 cuadro.style.opacity = '1';
                 
