@@ -59,6 +59,7 @@
 
         .cuadro {
             /* === VARIABLES DEL CUADRO === */
+            /* Se definen por defecto, pero se sobreescriben en el HTML para la grilla */
             --movercuadroX: -260px; 
             --movercuadroY: 580px; 
             
@@ -159,24 +160,98 @@
             <source src="Deltarune.mp4" type="video/mp4">
         </video>
 
-        <!-- El Cuadro -->
-        <div id="miCuadro" class="cuadro">
-            
-            <!-- Etiqueta del Precio -->
+        <!-- CARTEL 1: Top Cake (Fila 1 - Izquierda) -->
+        <div class="cuadro" data-final-y="430px" style="--movercuadroX: -260px; --movercuadroY: 580px;">
             <div class="precio-cuadro">$50000 ARS</div>
-
             <div class="titulo-cuadro">Top Cake</div>
             <div class="descripcion-cuadro">
                 El resultado de varios dias de esfuerzo, una torta de alta calidad.
                 <br><br>
                 <b>Ingredientes:</b> Harina de trigo, azúcar, huevos, manteca, esencia de vainilla y polvo para hornear.
                 <br><br>
-                <!-- El Botón que abre la imagen -->
                 <a href="cake.png" target="_blank" class="boton-fotos">Ver fotos del producto</a>
             </div>
         </div>
 
-        <!-- La Imagen -->
+        <!-- CARTEL 2: Butler Juice (Fila 1 - Derecha) -->
+        <div class="cuadro" data-final-y="430px" style="--movercuadroX: 260px; --movercuadroY: 580px;">
+            <div class="precio-cuadro">$50000 ARS</div>
+            <div class="titulo-cuadro">Butler Juice</div>
+            <div class="descripcion-cuadro">
+                Un jugo refinado, servido con la mayor elegancia y cuidado del mundo oscuro.
+                <br><br>
+                <b>Ingredientes:</b> Uvas seleccionadas, agua purificada, un toque de menta fresca y azúcar.
+                <br><br>
+                <a href="Butlerjuice.jpg" target="_blank" class="boton-fotos">Ver fotos del producto</a>
+            </div>
+        </div>
+
+        <!-- CARTEL 3: CD Bagel (Fila 2 - Izquierda) -->
+        <div class="cuadro" data-final-y="830px" style="--movercuadroX: -260px; --movercuadroY: 980px;">
+            <div class="precio-cuadro">$50000 ARS</div>
+            <div class="titulo-cuadro">CD Bagel</div>
+            <div class="descripcion-cuadro">
+                Un bagel perfectamente redondo y brillante. Suena crujiente en cada mordisco.
+                <br><br>
+                <b>Ingredientes:</b> Harina, levadura, agua, sal, semillas de sésamo y pistas de audio.
+                <br><br>
+                <a href="CD bagel.jpg" target="_blank" class="boton-fotos">Ver fotos del producto</a>
+            </div>
+        </div>
+
+        <!-- CARTEL 4: Dark Burger (Fila 2 - Derecha) -->
+        <div class="cuadro" data-final-y="830px" style="--movercuadroX: 260px; --movercuadroY: 980px;">
+            <div class="precio-cuadro">$50000 ARS</div>
+            <div class="titulo-cuadro">Dark Burger</div>
+            <div class="descripcion-cuadro">
+                Una hamburguesa oscura y misteriosa, asada a la perfección para restaurar energía.
+                <br><br>
+                <b>Ingredientes:</b> Pan oscuro, carne misteriosa, queso, lechuga, tomate y salsa secreta.
+                <br><br>
+                <a href="Dark burger.jpg" target="_blank" class="boton-fotos">Ver fotos del producto</a>
+            </div>
+        </div>
+
+        <!-- CARTEL 5: Deluxe Dinner (Fila 3 - Izquierda) -->
+        <div class="cuadro" data-final-y="1230px" style="--movercuadroX: -260px; --movercuadroY: 1380px;">
+            <div class="precio-cuadro">$50000 ARS</div>
+            <div class="titulo-cuadro">Deluxe Dinner</div>
+            <div class="descripcion-cuadro">
+                Una cena majestuosa, preparada para saciar hasta el hambre más voraz.
+                <br><br>
+                <b>Ingredientes:</b> Carne asada, puré de papas, vegetales glaseados y néctar dulce.
+                <br><br>
+                <a href="Deluxedinner.jpg" target="_blank" class="boton-fotos">Ver fotos del producto</a>
+            </div>
+        </div>
+
+        <!-- CARTEL 6: Battery Acid (Fila 3 - Derecha) -->
+        <div class="cuadro" data-final-y="1230px" style="--movercuadroX: 260px; --movercuadroY: 1380px;">
+            <div class="precio-cuadro">$50000 ARS</div>
+            <div class="titulo-cuadro">Battery Acid</div>
+            <div class="descripcion-cuadro">
+                Una bebida electrizante reservada solo para los verdaderos gamers y robots.
+                <br><br>
+                <b>Ingredientes:</b> Ácido cítrico, agua carbonatada, colorante verde y muchísima cafeína.
+                <br><br>
+                <a href="battery acid drink.jpg" target="_blank" class="boton-fotos">Ver fotos del producto</a>
+            </div>
+        </div>
+
+        <!-- CARTEL 7: Juice Combo (Fila 4 - Centro) -->
+        <div class="cuadro" data-final-y="1630px" style="--movercuadroX: 0px; --movercuadroY: 1780px;">
+            <div class="precio-cuadro">$50000 ARS</div>
+            <div class="titulo-cuadro">Juice Combo</div>
+            <div class="descripcion-cuadro">
+                La combinación definitiva, perfectamente balanceada para refrescarte en un día agitado.
+                <br><br>
+                <b>Ingredientes:</b> 25% jugo de frutilla y 75% limonada.
+                <br><br>
+                <a href="juice combo.jpg" target="_blank" class="boton-fotos">Ver fotos del producto</a>
+            </div>
+        </div>
+
+        <!-- La Imagen Principal -->
         <img id="miImagen" src="Restaurant.png" alt="Superposición">
 
         <!-- El Sonido -->
@@ -190,7 +265,9 @@
         const video = document.getElementById('miVideo');
         const imagen = document.getElementById('miImagen');
         const sonido = document.getElementById('miSonido');
-        const cuadro = document.getElementById('miCuadro');
+        
+        // Selecciona TODOS los cuadros que haya en la página
+        const cuadros = document.querySelectorAll('.cuadro');
 
         // 1. Al hacer clic, arranca el video
         document.body.addEventListener('click', function() {
@@ -210,15 +287,18 @@
                 video.style.setProperty('--movervideoY', '-149px');
                 imagen.style.setProperty('--moverimagenY', '-50px');
                 
-                // Muestra el cuadro en el HTML
-                cuadro.style.display = 'block';
-                
-                // Forzar reflow
-                void cuadro.offsetWidth; 
-                
-                // Activa la subida y el fade-in
-                cuadro.style.setProperty('--movercuadroY', '430px');
-                cuadro.style.opacity = '1';
+                // Recorre todos los cuadros para mostrarlos y animarlos
+                cuadros.forEach(cuadro => {
+                    cuadro.style.display = 'block';
+                    
+                    // Forzar reflow para cada cuadro individualmente
+                    void cuadro.offsetWidth; 
+                    
+                    // Lee a dónde debe subir desde el atributo HTML "data-final-y"
+                    const alturaFinal = cuadro.getAttribute('data-final-y');
+                    cuadro.style.setProperty('--movercuadroY', alturaFinal);
+                    cuadro.style.opacity = '1';
+                });
                 
             }, 3000); 
 
