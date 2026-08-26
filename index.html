@@ -15,7 +15,7 @@
         body {
             background-color: #000000;
             margin: 0;
-            min-height: 500vh; /* Extendido para dar más espacio de scroll hacia abajo */
+            min-height: 500vh; 
             cursor: pointer; 
             font-family: 'DeterminationSans', monospace;
             color: white; 
@@ -29,6 +29,31 @@
             position: relative;
         }
 
+        /* ----- NUEVO FONDO GIF ----- */
+        .fondo-gif {
+            /* Variables para configurar el fondo a tu gusto */
+            --moverfondoX: 0px;
+            --moverfondoY: 0px;
+            --anchofondo: 100vw; /* 100vw ocupa todo el ancho de la pantalla */
+            --altofondo: 100vh;  /* 100vh ocupa todo el alto de la pantalla */
+
+            position: fixed; /* Fixed hace que el fondo se quede quieto aunque bajes con el scroll */
+            top: 0;
+            left: 0;
+            width: var(--anchofondo);
+            height: var(--altofondo);
+            object-fit: cover; /* Evita que el GIF se deforme si cambias las proporciones */
+            
+            z-index: 1; /* Mantiene el fondo detrás de todo (los textos tienen 5) */
+            
+            transform: translate(var(--moverfondoX), var(--moverfondoY));
+            
+            opacity: 0; /* Arranca invisible */
+            display: none;
+            transition: opacity 1.2s ease-in-out; /* Efecto suave al aparecer */
+            pointer-events: none; /* Evita que el GIF bloquee los clics a los botones */
+        }
+
         video {
             --ajustartamañovideo: 45%; 
             --movervideoX: 0px;
@@ -39,9 +64,10 @@
             transition: transform 1s ease-in-out;
             max-width: 100%;
             max-height: 100vh;
+            z-index: 2; /* Para que quede por encima del fondo animado */
         }
 
-        img {
+        img.superposicion {
             --moverimagenX: 0px;
             --moverimagenY: 100px; 
 
@@ -55,7 +81,6 @@
             display: none; 
         }
 
-        /* ----- NUEVO TÍTULO PRINCIPAL ----- */
         .titulo-principal {
             position: absolute;
             width: 100%;
@@ -66,18 +91,16 @@
             font-weight: bold;
             text-shadow: 4px 4px 0px #000;
             
-            /* Variable para moverlo en vertical */
             --moverTituloY: 750px; 
             transform: translateY(var(--moverTituloY));
             
             opacity: 0;
             display: none;
             transition: transform 1s ease-in-out, opacity 1.2s ease-in-out;
-            pointer-events: none; /* Evita que moleste si haces clic por accidente */
+            pointer-events: none; 
         }
 
         .cuadro {
-            /* Las variables base, se sobreescriben en el HTML de cada cuadro */
             --movercuadroX: -260px; 
             --movercuadroY: 580px; 
             
@@ -108,7 +131,6 @@
             font-size: 48px; 
             font-weight: bold;
             margin-bottom: 10px; 
-            /* Permite mover el título de forma independiente desde el HTML */
             transform: translateY(var(--movertituloY, 0px));
         }
 
@@ -116,7 +138,6 @@
             color: #ffffff; 
             font-size: 25px; 
             line-height: 1.4; 
-            /* Permite mover la descripción de forma independiente desde el HTML */
             transform: translateY(var(--moverdescY, 0px));
         }
 
@@ -133,7 +154,6 @@
             font-weight: bold;
             text-shadow: 2px 2px 0px #000; 
             
-            /* Toma las variables desde el HTML de cada precio */
             transform: translate(var(--moverprecioX, 305px), var(--moverprecioY, 267px)) rotate(var(--rotacionprecio, -30deg));
             z-index: 10; 
             pointer-events: none; 
@@ -151,7 +171,6 @@
             text-decoration: none;
             cursor: pointer;
             
-            /* Toma la variable desde el HTML de cada botón */
             transform: translateY(var(--moverbotonY, 0px));
             transition: background-color 0.2s, color 0.2s, transform 0.2s;
         }
@@ -166,16 +185,17 @@
 
     <div class="pantalla-principal">
         
+        <!-- EL FONDO ANIMADO -->
+        <img id="miFondo" class="fondo-gif" src="background.gif" alt="Fondo animado">
+
         <video id="miVideo">
             <source src="Deltarune.mp4" type="video/mp4">
         </video>
 
-        <!-- TÍTULO PRINCIPAL QUE VA ARRIBA DE TODO -->
         <div id="tituloMenu" class="titulo-principal" data-final-y="440px" style="--moverTituloY: 750px;">
             Mirá nuestro menú
         </div>
 
-        <!-- CARTEL 1: Top Cake -->
         <div class="cuadro" data-final-y="730px" style="--movercuadroX: -260px; --movercuadroY: 880px;">
             <div class="precio-cuadro" style="--moverprecioX: 305px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$50000 ARS</div>
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Torta Top</div>
@@ -188,7 +208,6 @@
             </div>
         </div>
 
-        <!-- CARTEL 2: Butler Juice -->
         <div class="cuadro" data-final-y="730px" style="--movercuadroX: 260px; --movercuadroY: 880px;">
             <div class="precio-cuadro" style="--moverprecioX: 315px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$5000 ARS</div>
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Jugo de Mayordomo</div>
@@ -201,7 +220,6 @@
             </div>
         </div>
 
-        <!-- CARTEL 3: CD Bagel -->
         <div class="cuadro" data-final-y="1230px" style="--movercuadroX: -260px; --movercuadroY: 1380px;">
             <div class="precio-cuadro" style="--moverprecioX: 310px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$8000 ARS</div>
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Bagel CD</div>
@@ -214,7 +232,6 @@
             </div>
         </div>
 
-        <!-- CARTEL 4: Dark Burger -->
         <div class="cuadro" data-final-y="1230px" style="--movercuadroX: 260px; --movercuadroY: 1380px;">
             <div class="precio-cuadro" style="--moverprecioX: 305px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$12000 ARS</div>
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Hamburguesa Oscura</div>
@@ -227,7 +244,6 @@
             </div>
         </div>
 
-        <!-- CARTEL 5: Deluxe Dinner -->
         <div class="cuadro" data-final-y="1730px" style="--movercuadroX: -260px; --movercuadroY: 1880px;">
             <div class="precio-cuadro" style="--moverprecioX: 305px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$15000 ARS</div>
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Cena Deluxe</div>
@@ -239,7 +255,6 @@
             </div>
         </div>
 
-        <!-- CARTEL 6: Battery Acid -->
         <div class="cuadro" data-final-y="1730px" style="--movercuadroX: 260px; --movercuadroY: 1880px;">
             <div class="precio-cuadro" style="--moverprecioX: 310px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$6000 ARS</div>
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Bateria Acida</div>
@@ -252,7 +267,6 @@
             </div>
         </div>
 
-        <!-- CARTEL 7: Juice Combo -->
         <div class="cuadro" data-final-y="2230px" style="--movercuadroX: 0px; --movercuadroY: 2380px;">
             <div class="precio-cuadro" style="--moverprecioX: 310px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$7000 ARS</div>
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Juice Combo</div>
@@ -266,10 +280,9 @@
             </div>
         </div>
 
-        <!-- La Imagen Principal -->
-        <img id="miImagen" src="Restaurant.png" alt="Superposición">
+        <!-- Le agregué la clase superposicion para que no se confunda con el fondo en el CSS -->
+        <img id="miImagen" class="superposicion" src="Restaurant.png" alt="Superposición">
 
-        <!-- El Sonido -->
         <audio id="miSonido">
             <source src="sonido.wav" type="audio/wav">
         </audio>
@@ -279,35 +292,36 @@
     <script>
         const video = document.getElementById('miVideo');
         const imagen = document.getElementById('miImagen');
+        const fondoGif = document.getElementById('miFondo');
         const sonido = document.getElementById('miSonido');
         const cuadros = document.querySelectorAll('.cuadro');
         const tituloPrincipal = document.getElementById('tituloMenu');
 
-        // 1. Al hacer clic, arranca el video
         document.body.addEventListener('click', function() {
             if (video.paused) {
                 video.play();
             }
         }, { once: true });
 
-        // 2. Evento al terminar el video
         video.addEventListener('ended', function() {
             
             imagen.style.display = 'block'; 
             sonido.play();
 
-            // Contador de 3 segundos
             setTimeout(function() {
                 video.style.setProperty('--movervideoY', '-149px');
                 imagen.style.setProperty('--moverimagenY', '-50px');
                 
-                // Mostrar y animar el Título Principal
+                // Mostrar y animar el fondo GIF
+                fondoGif.style.display = 'block';
+                void fondoGif.offsetWidth; 
+                fondoGif.style.opacity = '1';
+
                 tituloPrincipal.style.display = 'block';
                 void tituloPrincipal.offsetWidth; 
                 tituloPrincipal.style.setProperty('--moverTituloY', tituloPrincipal.getAttribute('data-final-y'));
                 tituloPrincipal.style.opacity = '1';
 
-                // Recorre todos los cuadros para mostrarlos y animarlos
                 cuadros.forEach(cuadro => {
                     cuadro.style.display = 'block';
                     void cuadro.offsetWidth; 
