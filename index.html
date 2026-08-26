@@ -55,6 +55,27 @@
             display: none; 
         }
 
+        /* ----- NUEVO TÍTULO PRINCIPAL ----- */
+        .titulo-principal {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            z-index: 5;
+            color: #ffffff;
+            font-size: 70px;
+            font-weight: bold;
+            text-shadow: 4px 4px 0px #000;
+            
+            /* Variable para moverlo en vertical */
+            --moverTituloY: 750px; 
+            transform: translateY(var(--moverTituloY));
+            
+            opacity: 0;
+            display: none;
+            transition: transform 1s ease-in-out, opacity 1.2s ease-in-out;
+            pointer-events: none; /* Evita que moleste si haces clic por accidente */
+        }
+
         .cuadro {
             /* Las variables base, se sobreescriben en el HTML de cada cuadro */
             --movercuadroX: -260px; 
@@ -148,6 +169,11 @@
         <video id="miVideo">
             <source src="Deltarune.mp4" type="video/mp4">
         </video>
+
+        <!-- TÍTULO PRINCIPAL QUE VA ARRIBA DE TODO -->
+        <div id="tituloMenu" class="titulo-principal" data-final-y="600px" style="--moverTituloY: 750px;">
+            MENÚ DE COMPRAS
+        </div>
 
         <!-- CARTEL 1: Top Cake -->
         <div class="cuadro" data-final-y="730px" style="--movercuadroX: -260px; --movercuadroY: 880px;">
@@ -255,6 +281,7 @@
         const imagen = document.getElementById('miImagen');
         const sonido = document.getElementById('miSonido');
         const cuadros = document.querySelectorAll('.cuadro');
+        const tituloPrincipal = document.getElementById('tituloMenu');
 
         // 1. Al hacer clic, arranca el video
         document.body.addEventListener('click', function() {
@@ -274,6 +301,12 @@
                 video.style.setProperty('--movervideoY', '-149px');
                 imagen.style.setProperty('--moverimagenY', '-50px');
                 
+                // Mostrar y animar el Título Principal
+                tituloPrincipal.style.display = 'block';
+                void tituloPrincipal.offsetWidth; 
+                tituloPrincipal.style.setProperty('--moverTituloY', tituloPrincipal.getAttribute('data-final-y'));
+                tituloPrincipal.style.opacity = '1';
+
                 // Recorre todos los cuadros para mostrarlos y animarlos
                 cuadros.forEach(cuadro => {
                     cuadro.style.display = 'block';
