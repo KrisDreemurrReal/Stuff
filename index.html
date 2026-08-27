@@ -1,651 +1,364 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Video</title>
-
     
-
     <style>
-
         /* FUENTE CON EL NOMBRE EXACTO EN GITHUB */
-
         @font-face {
-
             font-family: 'DeterminationSans';
-
             src: url('DeterminationSansWebRegular-369X.ttf') format('truetype');
-
         }
-
-
 
         body {
-
             background-color: #000000;
-
             margin: 0;
-
             min-height: 500vh; /* Extendido para dar más espacio de scroll hacia abajo */
-
             cursor: pointer; 
-
             font-family: 'DeterminationSans', monospace;
-
             color: white; 
-
         }
-
-
 
         .pantalla-principal {
-
             display: flex;
-
             justify-content: center;
-
             align-items: center;
-
             height: 100vh; 
-
             position: relative;
-
         }
-
-
 
         video {
-
             --ajustartamañovideo: 45%; 
-
             --movervideoX: 0px;
-
             --movervideoY: 0px;
 
-
-
             width: var(--ajustartamañovideo);
-
             transform: translate(var(--movervideoX), var(--movervideoY));
-
             transition: transform 1s ease-in-out;
-
             max-width: 100%;
-
             max-height: 100vh;
-
         }
-
-
 
         img {
-
             --moverimagenX: 0px;
-
             --moverimagenY: 100px; 
 
-
-
             position: absolute; 
-
             z-index: 10; 
-
             width: 31%; 
 
-
-
             transform: translate(var(--moverimagenX), var(--moverimagenY));
-
             transition: transform 1s ease-in-out;
-
             pointer-events: none;
-
             display: none; 
-
         }
 
-
-
-        /* ----- NUEVO TÍTULO PRINCIPAL ----- */
-
-        .titulo-principal {
-
-            position: absolute;
-
-            width: 100%;
-
-            text-align: center;
-
-            z-index: 5;
-
-            color: #ffffff;
-
-            font-size: 70px;
-
-            font-weight: bold;
-
-            text-shadow: 4px 4px 0px #000;
-
-            
-
-            /* Variable para moverlo en vertical */
-
-            --moverTituloY: 750px; 
-
-            transform: translateY(var(--moverTituloY));
-
-            
-
+        /* ----- NUEVAS FLORES ANIMADAS Y FIJAS ----- */
+        .flor {
+            position: fixed;
+            bottom: 20px; /* Distancia desde abajo de la pantalla */
+            z-index: 20;
+            width: 15%; /* Podés cambiar este valor para hacerlas más grandes o chicas */
             opacity: 0;
-
             display: none;
-
-            transition: transform 1s ease-in-out, opacity 1.2s ease-in-out;
-
-            pointer-events: none; /* Evita que moleste si haces clic por accidente */
-
+            transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out;
+            pointer-events: none; 
         }
 
+        #flor-izq {
+            left: 20px;
+            /* Arranca escondida hacia la izquierda */
+            transform: translateX(var(--moverFlorX, -150px)); 
+        }
 
+        #flor-der {
+            right: 20px;
+            /* Arranca escondida hacia la derecha Y está invertida (espejo) */
+            transform: translateX(var(--moverFlorX, 150px)) scaleX(-1); 
+        }
+
+        /* ----- TÍTULO PRINCIPAL ----- */
+        .titulo-principal {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            z-index: 5;
+            color: #ffffff;
+            font-size: 70px;
+            font-weight: bold;
+            text-shadow: 4px 4px 0px #000;
+            
+            --moverTituloY: 750px; 
+            transform: translateY(var(--moverTituloY));
+            
+            opacity: 0;
+            display: none;
+            transition: transform 1s ease-in-out, opacity 1.2s ease-in-out;
+            pointer-events: none; 
+        }
 
         .cuadro {
-
-            /* Las variables base, se sobreescriben en el HTML de cada cuadro */
-
             --movercuadroX: -260px; 
-
             --movercuadroY: 580px; 
-
             
-
             --anchocuadro: 455px;   
-
             --altocuadro: 355px;    
-
             --escalacuadro: 1;    
 
-
-
             position: absolute;
-
             z-index: 5; 
-
             border: 6px solid white; 
-
             background-color: black;
-
             
-
             width: var(--anchocuadro);
-
             height: var(--altocuadro);
-
             
-
             transform: translate(var(--movercuadroX), var(--movercuadroY)) scale(var(--escalacuadro));
-
             opacity: 0; 
-
             transition: transform 1s ease-in-out, opacity 1.2s ease-in-out;
-
             
-
             display: none;
-
             padding: 20px; 
-
             box-sizing: border-box; 
-
             text-align: center; 
-
         }
-
-
 
         .titulo-cuadro {
-
             color: #ffff00; 
-
             font-size: 48px; 
-
             font-weight: bold;
-
             margin-bottom: 10px; 
-
-            /* Permite mover el título de forma independiente desde el HTML */
-
             transform: translateY(var(--movertituloY, 0px));
-
         }
-
-
 
         .descripcion-cuadro {
-
             color: #ffffff; 
-
             font-size: 25px; 
-
             line-height: 1.4; 
-
-            /* Permite mover la descripción de forma independiente desde el HTML */
-
             transform: translateY(var(--moverdescY, 0px));
-
         }
-
-
 
         .descripcion-cuadro b {
-
             color: #ffffff; 
-
         }
-
-
 
         .precio-cuadro {
-
             position: absolute;
-
             top: 0;
-
             left: 0;
-
             color: #00ff00; 
-
             font-size: 35px;
-
             font-weight: bold;
-
             text-shadow: 2px 2px 0px #000; 
-
             
-
-            /* Toma las variables desde el HTML de cada precio */
-
             transform: translate(var(--moverprecioX, 305px), var(--moverprecioY, 267px)) rotate(var(--rotacionprecio, -30deg));
-
             z-index: 10; 
-
             pointer-events: none; 
-
         }
-
-
 
         .boton-fotos {
-
             display: inline-block;
-
             margin-top: 10px;
-
             padding: 8px 16px;
-
             background-color: black;
-
             color: white;
-
             border: 4px solid white;
-
             font-family: 'DeterminationSans', monospace;
-
             font-size: 25px;
-
             text-decoration: none;
-
             cursor: pointer;
-
             
-
-            /* Toma la variable desde el HTML de cada botón */
-
             transform: translateY(var(--moverbotonY, 0px));
-
             transition: background-color 0.2s, color 0.2s, transform 0.2s;
-
         }
-
-
 
         .boton-fotos:hover {
-
             background-color: white;
-
             color: black;
-
         }
-
     </style>
-
 </head>
-
 <body>
 
-
-
     <div class="pantalla-principal">
-
         
-
         <video id="miVideo">
-
             <source src="Deltarune.mp4" type="video/mp4">
-
         </video>
 
-
+        <!-- LAS FLORES -->
+        <img id="flor-izq" class="flor" src="Flowers.png" alt="Flor Izquierda">
+        <img id="flor-der" class="flor" src="Flowers.png" alt="Flor Derecha">
 
         <!-- TÍTULO PRINCIPAL QUE VA ARRIBA DE TODO -->
-
         <div id="tituloMenu" class="titulo-principal" data-final-y="440px" style="--moverTituloY: 750px;">
-
             Mirá nuestro menú
-
         </div>
-
-
 
         <!-- CARTEL 1: Top Cake -->
-
         <div class="cuadro" data-final-y="730px" style="--movercuadroX: -260px; --movercuadroY: 880px;">
-
             <div class="precio-cuadro" style="--moverprecioX: 305px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$50000 ARS</div>
-
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Torta Top</div>
-
             <div class="descripcion-cuadro" style="--moverdescY: 0px;">
-
                 ¡Esta torta hara bailar tus papilas gustativas!
-
                 <br><br>
-
                 <b>Ingredientes:</b> Harina de trigo, azúcar, huevos, manteca, esencia de vainilla y polvo para hornear.
-
                 <br><br>
-
                 <a href="cake.png" target="_blank" class="boton-fotos" style="--moverbotonY: 0px;">Ver fotos del producto</a>
-
             </div>
-
         </div>
-
-
 
         <!-- CARTEL 2: Butler Juice -->
-
         <div class="cuadro" data-final-y="730px" style="--movercuadroX: 260px; --movercuadroY: 880px;">
-
             <div class="precio-cuadro" style="--moverprecioX: 315px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$5000 ARS</div>
-
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Jugo de Mayordomo</div>
-
             <div class="descripcion-cuadro" style="--moverdescY: 0px;">
-
                 Un jugo refinado, servido con la mayor elegancia y cuidado.
-
                 <br><br>
-
                 <b>Ingredientes:</b> Jugo natural de uvas oscuras y arándanos, abundante hielo en cubos.
-
                 <br><br>
-
                 <a href="Butlerjuice.jpg" target="_blank" class="boton-fotos" style="--moverbotonY: 0px;">Ver fotos del producto</a>
-
             </div>
-
         </div>
-
-
 
         <!-- CARTEL 3: CD Bagel -->
-
         <div class="cuadro" data-final-y="1230px" style="--movercuadroX: -260px; --movercuadroY: 1380px;">
-
             <div class="precio-cuadro" style="--moverprecioX: 310px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$8000 ARS</div>
-
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Bagel CD</div>
-
             <div class="descripcion-cuadro" style="--moverdescY: 0px;">
-
                 Un bagel perfectamente redondo y brillante. Suena crujiente en cada mordisco.
-
                 <br><br>
-
                 <b>Ingredientes:</b> Bagel con semillas y relleno de queso crema.
-
                 <br><br>
-
                 <a href="CD bagel.jpg" target="_blank" class="boton-fotos" style="--moverbotonY: 0px;">Ver fotos del producto</a>
-
             </div>
-
         </div>
-
-
 
         <!-- CARTEL 4: Dark Burger -->
-
         <div class="cuadro" data-final-y="1230px" style="--movercuadroX: 260px; --movercuadroY: 1380px;">
-
             <div class="precio-cuadro" style="--moverprecioX: 305px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$12000 ARS</div>
-
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Hamburguesa Oscura</div>
-
             <div class="descripcion-cuadro" style="--moverdescY: 0px;">
-
                 Una hamburguesa misteriosa hecho de... ¡Para, solo esta quemado!.
-
                 <br><br>
-
                 <b>Ingredientes:</b> Pan con un poco de tinta de calamar, carne, lechuga, tomate y un poco de nuestra salsa secreta.
-
                 <br><br>
-
                 <a href="Dark burger.jpg" target="_blank" class="boton-fotos" style="--moverbotonY: 0px;">Ver fotos del producto</a>
-
             </div>
-
         </div>
-
-
 
         <!-- CARTEL 5: Deluxe Dinner -->
-
         <div class="cuadro" data-final-y="1730px" style="--movercuadroX: -260px; --movercuadroY: 1880px;">
-
             <div class="precio-cuadro" style="--moverprecioX: 305px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$15000 ARS</div>
-
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Cena Deluxe</div>
-
             <div class="descripcion-cuadro" style="--moverdescY: 0px;">
-
                 Una cena majestuosa, preparada para saciar hasta el hambre mas feroz.
-
                 <br><br>
-
                 <b>Ingredientes:</b> Arroz, alga nori, atún crudo, vieiras y vegetales frescos.
-
                 <a href="Deluxedinner.jpg" target="_blank" class="boton-fotos" style="--moverbotonY: 70px;">Ver fotos del producto</a>
-
             </div>
-
         </div>
-
-
 
         <!-- CARTEL 6: Battery Acid -->
-
         <div class="cuadro" data-final-y="1730px" style="--movercuadroX: 260px; --movercuadroY: 1880px;">
-
             <div class="precio-cuadro" style="--moverprecioX: 310px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$6000 ARS</div>
-
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Bateria Acida</div>
-
             <div class="descripcion-cuadro" style="--moverdescY: 0px;">
-
                 Una bebida electrizante reservada solo para robots.
-
                 <br><br>
-
                 <b>Ingredientes:</b> Limón, kiwi, melón, pepino y algo de hielo
-
                 <br><br>
-
                 <a href="battery acid drink.jpg" target="_blank" class="boton-fotos" style="--moverbotonY: 31px;">Ver fotos del producto</a>
-
             </div>
-
         </div>
-
-
 
         <!-- CARTEL 7: Juice Combo -->
-
         <div class="cuadro" data-final-y="2230px" style="--movercuadroX: 0px; --movercuadroY: 2380px;">
-
             <div class="precio-cuadro" style="--moverprecioX: 310px; --moverprecioY: 267px; --rotacionprecio: -30deg;">$7000 ARS</div>
-
             <div class="titulo-cuadro" style="--movertituloY: 0px;">Juice Combo</div>
-
             <div class="descripcion-cuadro" style="--moverdescY: 0px;">
-
                 <br>
-
                 La combinación definitiva.
-
                 <br><br>
-
                 <b>Ingredientes:</b> 25% jugo de frutilla y 75% limonada.
-
                 <br>
-
                 <a href="juice combo.jpg" target="_blank" class="boton-fotos" style="--moverbotonY: 65px;">Ver fotos del producto</a>
-
             </div>
-
         </div>
 
-
-
         <!-- La Imagen Principal -->
-
         <img id="miImagen" src="Restaurant.png" alt="Superposición">
 
-
-
         <!-- El Sonido -->
-
         <audio id="miSonido">
-
             <source src="sonido.wav" type="audio/wav">
-
         </audio>
-
-
 
     </div>
 
-
-
     <script>
-
         const video = document.getElementById('miVideo');
-
         const imagen = document.getElementById('miImagen');
-
         const sonido = document.getElementById('miSonido');
-
         const cuadros = document.querySelectorAll('.cuadro');
-
         const tituloPrincipal = document.getElementById('tituloMenu');
-
-
+        
+        // Elementos de las flores
+        const florIzq = document.getElementById('flor-izq');
+        const florDer = document.getElementById('flor-der');
 
         // 1. Al hacer clic, arranca el video
-
         document.body.addEventListener('click', function() {
-
             if (video.paused) {
-
                 video.play();
-
             }
-
         }, { once: true });
 
-
-
         // 2. Evento al terminar el video
-
         video.addEventListener('ended', function() {
-
             
-
             imagen.style.display = 'block'; 
-
             sonido.play();
 
-
-
             // Contador de 3 segundos
-
             setTimeout(function() {
-
                 video.style.setProperty('--movervideoY', '-149px');
-
                 imagen.style.setProperty('--moverimagenY', '-50px');
-
                 
-
                 // Mostrar y animar el Título Principal
-
                 tituloPrincipal.style.display = 'block';
-
                 void tituloPrincipal.offsetWidth; 
-
                 tituloPrincipal.style.setProperty('--moverTituloY', tituloPrincipal.getAttribute('data-final-y'));
-
                 tituloPrincipal.style.opacity = '1';
 
-
+                // Mostrar y animar las flores
+                florIzq.style.display = 'block';
+                florDer.style.display = 'block';
+                void florIzq.offsetWidth; // Fuerza al navegador a registrar el estado inicial
+                void florDer.offsetWidth;
+                
+                florIzq.style.setProperty('--moverFlorX', '0px');
+                florIzq.style.opacity = '1';
+                
+                florDer.style.setProperty('--moverFlorX', '0px');
+                florDer.style.opacity = '1';
 
                 // Recorre todos los cuadros para mostrarlos y animarlos
-
                 cuadros.forEach(cuadro => {
-
                     cuadro.style.display = 'block';
-
                     void cuadro.offsetWidth; 
-
                     
-
                     const alturaFinal = cuadro.getAttribute('data-final-y');
-
                     cuadro.style.setProperty('--movercuadroY', alturaFinal);
-
                     cuadro.style.opacity = '1';
-
                 });
-
                 
-
             }, 3000); 
 
-
-
         });
-
     </script>
 
-
-
 </body>
-
 </html>
