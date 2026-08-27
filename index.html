@@ -55,12 +55,18 @@
             display: none; 
         }
 
-        /* ----- NUEVAS FLORES ANIMADAS Y FIJAS ----- */
+        /* ----- FLORES ESTÁTICAS EN LA PÁGINA ----- */
         .flor {
-            position: fixed;
-            bottom: 20px; /* Distancia desde abajo de la pantalla */
+            position: absolute; /* Al cambiar a absolute, ya no te siguen al scrollear */
             z-index: 20;
-            width: 15%; /* Podés cambiar este valor para hacerlas más grandes o chicas */
+            width: 15%; /* Tamaño de las flores */
+            
+            /* ============================================================ */
+            /* 1. ALTURA RESPECTO AL FONDO DE LA PANTALLA INICIAL           */
+            /* Modificá este valor para moverlas arriba/abajo en la vista   */
+            bottom: 20px; 
+            /* ============================================================ */
+
             opacity: 0;
             display: none;
             transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out;
@@ -68,15 +74,23 @@
         }
 
         #flor-izq {
-            left: 20px;
-            /* Arranca escondida hacia la izquierda */
-            transform: translateX(var(--moverFlorX, -150px)); 
+            /* ============================================================ */
+            /* 2. DISTANCIA FLOR IZQUIERDA                                  */
+            left: -40px; 
+            /* ============================================================ */
+
+            /* Arranca escondida hacia la izquierda antes de la animación */
+            transform: translateX(var(--moverFlorX, -250px)); 
         }
 
         #flor-der {
-            right: 20px;
-            /* Arranca escondida hacia la derecha Y está invertida (espejo) */
-            transform: translateX(var(--moverFlorX, 150px)) scaleX(-1); 
+            /* ============================================================ */
+            /* 3. DISTANCIA FLOR DERECHA                                    */
+            right: -40px; 
+            /* ============================================================ */
+
+            /* Arranca escondida hacia la derecha Y en espejo */
+            transform: translateX(var(--moverFlorX, 250px)) scaleX(-1); 
         }
 
         /* ----- TÍTULO PRINCIPAL ----- */
@@ -336,7 +350,7 @@
                 // Mostrar y animar las flores
                 florIzq.style.display = 'block';
                 florDer.style.display = 'block';
-                void florIzq.offsetWidth; // Fuerza al navegador a registrar el estado inicial
+                void florIzq.offsetWidth; 
                 void florDer.offsetWidth;
                 
                 florIzq.style.setProperty('--moverFlorX', '0px');
